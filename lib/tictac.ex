@@ -19,6 +19,13 @@ defmodule Tictac do
     {:ok, %{game_board | location => player}}
   end
 
+  def play_at(game_board, column, row, player) do
+    with {:ok, valid_player} <- check_player(player),
+         {:ok, square} <- Tictac.Square.new(column, row),
+         {:ok, new_board} <- place_piece(game_board, square, valid_player),
+    do: new_board
+  end
+
   def create_board do
     for square <- create_squares(), into: %{}, do: {square, :empty}
   end
