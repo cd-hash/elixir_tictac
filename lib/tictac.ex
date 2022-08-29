@@ -7,8 +7,16 @@ defmodule Tictac do
     case player do
        :x -> {:ok, player}
        :o -> {:ok, player}
-       _ -> {:error, :invalid_location}
+       _ -> {:error, :invalid_player}
     end
+  end
+
+  def place_piece(_, {:error, :invalid_location}, _), do: {:error, :invalid_location}
+  def place_piece(game_board, location, player) do
+    if game_board[location] !== :empty do
+      {:error, :occupied}
+    end
+    {:ok, %{game_board | location => player}}
   end
 
   def create_board do
