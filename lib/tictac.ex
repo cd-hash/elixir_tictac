@@ -25,12 +25,4 @@ defmodule Tictac do
          {:ok, new_board} <- place_piece(game_board, square, valid_player),
     do: new_board
   end
-
-  def create_board do
-    for square <- create_squares(), into: %{}, do: {square, :empty}
-  end
-
-  def create_squares do
-     for c <- 1..3, r <- 1..3, into: MapSet.new(), do: %Tictac.Square{col: c, row: r}
-  end
 end
