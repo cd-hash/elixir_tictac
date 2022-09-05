@@ -23,6 +23,14 @@ defmodule Tictac.Cli do
     {col, row}
   end
 
+  def handle(%State{status: :game_over} = state, nil) do
+    display(state.board)
+    case state.winner do
+      :tie -> "Another tie? That's what's wrong with this game!!!!!"
+      _ -> "Player #{Atom.to_string(state.winner)} has won the game!!!!!!"
+    end
+  end
+
   def show(board, c, r) do
     [item] = for {%{col: col, row: row}, v} <- board, col === c, row === r, do: v
     if item == :empty, do: " ", else: Atom.to_string(item)
