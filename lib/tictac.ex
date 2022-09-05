@@ -3,6 +3,12 @@ defmodule Tictac do
   this module will hold the core game creation and logic for out tictac game
   """
 
+  alias Tictac.State
+
+  def start(ui) do
+    {:ok, state} = State.new(ui)
+  end
+
   def check_player(player) do
     case player do
        :x -> {:ok, player}
