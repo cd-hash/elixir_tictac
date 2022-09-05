@@ -10,9 +10,17 @@ defmodule Tictac.Cli do
   end
 
   def handle(%State{status: :initial}, :get_player) do
-    IO.gets("Which player will go first?\n x or o")
+    IO.gets("Which player will go first?\n x or o: ")
     |> String.trim()
     |> String.to_atom()
+  end
+
+  def handle(%State{status: :playing} = state, :get_location) do
+    display(state.board)
+    IO.puts("Where would #{state.turn} like to place your piece?\n")
+    row = IO.gets("row: ") |> trimmed_int
+    col = IO.gets("col: ") |> trimmed_int
+    {col, row}
   end
 
   def show(board, c, r) do
@@ -28,5 +36,12 @@ defmodule Tictac.Cli do
     ---------
 #{show(board, 1, 3)} | #{show(board, 2, 3)} | #{show(board, 3, 3)}
     """
+  end
+
+  def trimmed_int(str) do
+    case Integer.parse(str) do
+      {location, _} -> location
+      :error -> :error
+    end
   end
 end
